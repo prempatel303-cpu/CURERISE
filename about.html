@@ -1,308 +1,250 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About Us - CureRise</title>
-    <meta name="description" content="Learn about CureRise's mission to eliminate financial barriers to healthcare through transparent donations and community support.">
-    
-    <link rel="stylesheet" href="assets/css/global.css">
-    <link rel="stylesheet" href="assets/css/about.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About Us - CureRise</title>
+  <meta name="description" content="Learn about CureRise's mission to eliminate financial barriers to healthcare through transparent donations and community support.">
+  
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* Global healthcare theme */
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(to bottom right, #f0f9ff, #eaf7fb);
+      color: #333;
+      margin: 0;
+      padding: 0;
+    }
+
+    /* Hero Section */
+    .about-hero {
+      background: url('assets/images/doctor-bg.jpg') center/cover no-repeat;
+      position: relative;
+      padding: 100px 20px;
+      text-align: center;
+      color: #fff;
+    }
+    .about-hero::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(46, 134, 193, 0.8);
+      z-index: 0;
+    }
+    .hero-content {
+      position: relative;
+      z-index: 1;
+    }
+    .hero-title {
+      font-size: 2.8rem;
+      font-weight: 700;
+      margin-bottom: 20px;
+    }
+    .gradient-text {
+      background: linear-gradient(90deg, #28b463, #2e86c1);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .hero-description {
+      max-width: 800px;
+      margin: 0 auto;
+      font-size: 1.2rem;
+    }
+
+    /* Section titles */
+    .section-title {
+      font-size: 2rem;
+      color: #2e86c1;
+      margin-bottom: 20px;
+      position: relative;
+      text-align: center;
+    }
+    .section-title::after {
+      content: "";
+      width: 80px;
+      height: 4px;
+      background: #28b463;
+      display: block;
+      margin: 10px auto 0;
+      border-radius: 2px;
+    }
+
+    /* Mission Section */
+    .mission-section {
+      padding: 80px 20px;
+      background: #ffffff;
+    }
+    .mission-content {
+      display: flex;
+      gap: 40px;
+      align-items: center;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .mission-values {
+      margin-top: 30px;
+    }
+    .value-item {
+      display: flex;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+    .value-icon {
+      background: #eaf7fb;
+      padding: 12px;
+      border-radius: 50%;
+      margin-right: 15px;
+      color: #2e86c1;
+    }
+
+    /* Impact Cards */
+    .impact-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit,minmax(250px,1fr));
+      gap: 25px;
+      margin-top: 40px;
+    }
+    .impact-card {
+      background: #fff;
+      padding: 25px;
+      border-radius: 16px;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+      text-align: center;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .impact-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 10px 24px rgba(0,0,0,0.12);
+    }
+    .impact-number {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #28b463;
+    }
+
+    /* Team Section */
+    .team-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit,minmax(280px,1fr));
+      gap: 30px;
+      margin-top: 40px;
+    }
+    .team-member {
+      background: #fff;
+      padding: 20px;
+      border-radius: 16px;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+      text-align: center;
+    }
+    .member-img {
+      border-radius: 50%;
+      width: 120px;
+      height: 120px;
+      object-fit: cover;
+      margin-bottom: 15px;
+    }
+
+    /* CTA Section */
+    .cta-section {
+      background: linear-gradient(90deg, #2e86c1, #28b463);
+      color: #fff;
+      text-align: center;
+      padding: 80px 20px;
+      border-radius: 20px 20px 0 0;
+    }
+    .btn {
+      padding: 14px 28px;
+      border-radius: 8px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      display: inline-block;
+      margin: 10px;
+    }
+    .btn-primary {
+      background: #fff;
+      color: #2e86c1;
+    }
+    .btn-primary:hover {
+      background: #eaf7fb;
+    }
+    .btn-outline {
+      border: 2px solid #fff;
+      color: #fff;
+    }
+    .btn-outline:hover {
+      background: #fff;
+      color: #2e86c1;
+    }
+  </style>
 </head>
 <body>
-    <!-- Navigation -->
-    <div id="navigation-placeholder"></div>
+  
+  <!-- Hero Section -->
+  <section class="about-hero">
+    <div class="container">
+      <div class="hero-content">
+        <h1 class="hero-title">
+          Transforming Healthcare Through 
+          <span class="gradient-text">Transparency & Compassion</span>
+        </h1>
+        <p class="hero-description">
+          CureRise was born from a simple belief: no one should suffer or die because they cannot afford medical treatment. We're building a transparent, community-driven ecosystem that ensures every rupee donated reaches those who need it most.
+        </p>
+      </div>
+    </div>
+  </section>
 
-    <!-- Hero Section -->
-    <section class="about-hero">
-        <div class="container">
-            <div class="hero-content">
-                <h1 class="hero-title">
-                    Transforming Healthcare Through 
-                    <span class="gradient-text">Transparency & Compassion</span>
-                </h1>
-                <p class="hero-description">
-                    CureRise was born from a simple belief: no one should suffer or die because they cannot afford medical treatment. We're building a transparent, community-driven ecosystem that ensures every rupee donated reaches those who need it most.
-                </p>
-            </div>
-        </div>
-    </section>
+  <!-- Example Mission Section -->
+  <section class="mission-section">
+    <h2 class="section-title">Our Mission</h2>
+    <div class="mission-content">
+      <div class="mission-text">
+        <p>
+          To eliminate financial barriers to healthcare by creating a transparent platform that connects donors directly with verified hospitals, ensuring 100% of contributions reach patients in need while providing complete accountability through detailed reporting and impact tracking.
+        </p>
+      </div>
+    </div>
+  </section>
 
-    <!-- Mission Section -->
-    <section class="mission-section">
-        <div class="container">
-            <div class="mission-content">
-                <div class="mission-text">
-                    <h2 class="section-title">Our Mission</h2>
-                    <p class="mission-description">
-                        To eliminate financial barriers to healthcare by creating a transparent platform that connects donors directly with verified hospitals, ensuring 100% of contributions reach patients in need while providing complete accountability through detailed reporting and impact tracking.
-                    </p>
-                    <div class="mission-values">
-                        <div class="value-item">
-                            <div class="value-icon">
-                                <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
-                                    <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/>
-                                </svg>
-                            </div>
-                            <div class="value-content">
-                                <h3 class="value-title">100% Transparency</h3>
-                                <p class="value-description">Every donation tracked with detailed receipts and impact reports</p>
-                            </div>
-                        </div>
-                        <div class="value-item">
-                            <div class="value-icon">
-                                <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
-                                    <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
-                                </svg>
-                            </div>
-                            <div class="value-content">
-                                <h3 class="value-title">Direct Impact</h3>
-                                <p class="value-description">Funds go directly to hospitals with zero administrative fees</p>
-                            </div>
-                        </div>
-                        <div class="value-item">
-                            <div class="value-icon">
-                                <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
-                                    <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/>
-                                </svg>
-                            </div>
-                            <div class="value-content">
-                                <h3 class="value-title">Verified Partners</h3>
-                                <p class="value-description">All hospitals thoroughly vetted and continuously monitored</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="mission-image">
-                    <img src="assets/images/mission-image.jpg" alt="Healthcare mission" class="mission-img">
-                </div>
-            </div>
-        </div>
-    </section>
+  <!-- Example Impact Section -->
+  <section class="impact-section">
+    <h2 class="section-title">Our Impact</h2>
+    <div class="impact-grid">
+      <div class="impact-card">
+        <h3 class="impact-number">1,247</h3>
+        <p class="impact-label">Patients Treated</p>
+      </div>
+      <div class="impact-card">
+        <h3 class="impact-number">15,000+</h3>
+        <p class="impact-label">Meals Provided</p>
+      </div>
+    </div>
+  </section>
 
-    <!-- Story Section -->
-    <section class="story-section">
-        <div class="container">
-            <div class="story-content">
-                <div class="story-image">
-                    <img src="assets/images/founder-story.jpg" alt="CureRise founding story" class="story-img">
-                </div>
-                <div class="story-text">
-                    <h2 class="section-title">Our Story</h2>
-                    <div class="story-paragraphs">
-                        <p>
-                            CureRise was founded in 2023 when our team witnessed firsthand how financial constraints prevented families from accessing life-saving medical care. We saw patients being turned away from hospitals, families selling their homes to afford treatment, and children suffering because their parents couldn't pay for surgery.
-                        </p>
-                        <p>
-                            We realized that while there was immense goodwill and desire to help among people, there was no transparent, trustworthy platform that could connect donors directly with verified medical needs. Traditional charity models often lacked transparency, with donors unsure if their contributions actually reached the intended recipients.
-                        </p>
-                        <p>
-                            That's when we decided to build CureRise - a platform that would revolutionize healthcare funding by ensuring complete transparency, direct impact, and holistic support including nutrition through our Food Bank initiative.
-                        </p>
-                    </div>
-                    <div class="story-stats">
-                        <div class="story-stat">
-                            <span class="stat-number">2023</span>
-                            <span class="stat-label">Founded</span>
-                        </div>
-                        <div class="story-stat">
-                            <span class="stat-number">1,200+</span>
-                            <span class="stat-label">Lives Saved</span>
-                        </div>
-                        <div class="story-stat">
-                            <span class="stat-number">₹2.5Cr+</span>
-                            <span class="stat-label">Donated</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+  <!-- Example Team Section -->
+  <section class="team-section">
+    <h2 class="section-title">Our Team</h2>
+    <div class="team-grid">
+      <div class="team-member">
+        <img src="assets/images/team-1.jpg" alt="Team member" class="member-img">
+        <h3 class="member-name">Dr. Priya Sharma</h3>
+        <p class="member-role">Founder & CEO</p>
+      </div>
+    </div>
+  </section>
 
-    <!-- Impact Section -->
-    <section class="impact-section">
-        <div class="container">
-            <div class="section-header text-center">
-                <h2 class="section-title">Our Impact</h2>
-                <p class="section-description">
-                    Measuring success through lives saved and families supported
-                </p>
-            </div>
-            
-            <div class="impact-grid">
-                <div class="impact-card">
-                    <div class="impact-icon">
-                        <svg width="48" height="48" fill="currentColor" viewBox="0 0 24 24">
-                            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
-                        </svg>
-                    </div>
-                    <h3 class="impact-number">1,247</h3>
-                    <p class="impact-label">Patients Treated</p>
-                    <p class="impact-description">Successfully funded medical treatments for over 1,200 patients across India</p>
-                </div>
-                
-                <div class="impact-card">
-                    <div class="impact-icon">
-                        <svg width="48" height="48" fill="currentColor" viewBox="0 0 24 24">
-                            <path d="M16 6l2.29 2.29-4.88 4.88-4-4L2 16.59 3.41 18l6-6 4 4 6.3-6.29L22 12V6z"/>
-                        </svg>
-                    </div>
-                    <h3 class="impact-number">89</h3>
-                    <p class="impact-label">Partner Hospitals</p>
-                    <p class="impact-description">Verified healthcare institutions across major cities in India</p>
-                </div>
-                
-                <div class="impact-card">
-                    <div class="impact-icon">
-                        <svg width="48" height="48" fill="currentColor" viewBox="0 0 24 24">
-                            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-                        </svg>
-                    </div>
-                    <h3 class="impact-number">15,000+</h3>
-                    <p class="impact-label">Meals Provided</p>
-                    <p class="impact-description">Nutritious meals delivered through our Food Bank initiative</p>
-                </div>
-                
-                <div class="impact-card">
-                    <div class="impact-icon">
-                        <svg width="48" height="48" fill="currentColor" viewBox="0 0 24 24">
-                            <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/>
-                        </svg>
-                    </div>
-                    <h3 class="impact-number">100%</h3>
-                    <p class="impact-label">Transparency</p>
-                    <p class="impact-description">Complete accountability with detailed receipts for every donation</p>
-                </div>
-            </div>
-        </div>
-    </section>
+  <!-- CTA Section -->
+  <section class="cta-section">
+    <h2 class="cta-title">Join Our Mission</h2>
+    <p>Be part of the movement to make healthcare accessible to everyone.</p>
+    <a href="#" class="btn btn-primary">Start Helping Patients</a>
+    <a href="#" class="btn btn-outline">Partner With Us</a>
+  </section>
 
-    <!-- Team Section -->
-    <section class="team-section">
-        <div class="container">
-            <div class="section-header text-center">
-                <h2 class="section-title">Our Team</h2>
-                <p class="section-description">
-                    Dedicated professionals working to transform healthcare accessibility
-                </p>
-            </div>
-            
-            <div class="team-grid">
-                <div class="team-member">
-                    <div class="member-image">
-                        <img src="assets/images/team-1.jpg" alt="Team member" class="member-img">
-                    </div>
-                    <div class="member-info">
-                        <h3 class="member-name">Dr. Priya Sharma</h3>
-                        <p class="member-role">Founder & CEO</p>
-                        <p class="member-description">Former healthcare administrator with 15+ years experience in medical systems</p>
-                    </div>
-                </div>
-                
-                <div class="team-member">
-                    <div class="member-image">
-                        <img src="assets/images/team-2.jpg" alt="Team member" class="member-img">
-                    </div>
-                    <div class="member-info">
-                        <h3 class="member-name">Rajesh Kumar</h3>
-                        <p class="member-role">CTO</p>
-                        <p class="member-description">Technology leader focused on building transparent, secure donation platforms</p>
-                    </div>
-                </div>
-                
-                <div class="team-member">
-                    <div class="member-image">
-                        <img src="assets/images/team-3.jpg" alt="Team member" class="member-img">
-                    </div>
-                    <div class="member-info">
-                        <h3 class="member-name">Anita Patel</h3>
-                        <p class="member-role">Head of Operations</p>
-                        <p class="member-description">Ensures seamless coordination between donors, hospitals, and patients</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- CTA Section -->
-    <section class="cta-section">
-        <div class="container">
-            <div class="cta-content">
-                <h2 class="cta-title">Join Our Mission</h2>
-                <p class="cta-description">
-                    Be part of the movement to make healthcare accessible to everyone, regardless of their financial situation.
-                </p>
-                <div class="cta-actions">
-                    <a href="patients.html" class="btn btn-primary btn-lg">Start Helping Patients</a>
-                    <a href="contact.html" class="btn btn-outline btn-lg">Partner With Us</a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <div id="footer-placeholder"></div>
-
-    <!-- Scripts -->
-    <script src="assets/js/global.js"></script>
-    <script>
-        // Load navigation and footer
-        document.addEventListener('DOMContentLoaded', function() {
-            fetch('components/navigation.html')
-                .then(response => response.text())
-                .then(html => {
-                    document.getElementById('navigation-placeholder').innerHTML = html;
-                });
-
-            fetch('components/footer.html')
-                .then(response => response.text())
-                .then(html => {
-                    document.getElementById('footer-placeholder').innerHTML = html;
-                });
-
-            // Animate impact numbers on scroll
-            const observerOptions = {
-                threshold: 0.5,
-                rootMargin: '0px 0px -100px 0px'
-            };
-
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        const number = entry.target.querySelector('.impact-number');
-                        if (number && !number.classList.contains('animated')) {
-                            animateNumber(number);
-                            number.classList.add('animated');
-                        }
-                    }
-                });
-            }, observerOptions);
-
-            document.querySelectorAll('.impact-card').forEach(card => {
-                observer.observe(card);
-            });
-        });
-
-        function animateNumber(element) {
-            const target = parseInt(element.textContent.replace(/[^\d]/g, ''));
-            const duration = 2000;
-            const start = performance.now();
-            const suffix = element.textContent.replace(/[\d,]/g, '');
-
-            function update(currentTime) {
-                const elapsed = currentTime - start;
-                const progress = Math.min(elapsed / duration, 1);
-                const current = Math.floor(target * progress);
-                
-                element.textContent = current.toLocaleString() + suffix;
-                
-                if (progress < 1) {
-                    requestAnimationFrame(update);
-                }
-            }
-            
-            requestAnimationFrame(update);
-        }
-    </script>
 </body>
 </html>
