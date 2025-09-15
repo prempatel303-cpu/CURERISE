@@ -1,362 +1,323 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CureRise API Test</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-            background-color: #f5f5f5;
-        }
-        .container {
-            background: white;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            margin-bottom: 20px;
-        }
-        .test-section {
-            margin-bottom: 30px;
-        }
-        .test-section h2 {
-            color: #333;
-            border-bottom: 2px solid #007bff;
-            padding-bottom: 10px;
-        }
-        .test-button {
-            background: #007bff;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 4px;
-            cursor: pointer;
-            margin: 5px;
-            font-size: 14px;
-        }
-        .test-button:hover {
-            background: #0056b3;
-        }
-        .test-button:disabled {
-            background: #ccc;
-            cursor: not-allowed;
-        }
-        .result {
-            background: #f8f9fa;
-            border: 1px solid #dee2e6;
-            border-radius: 4px;
-            padding: 15px;
-            margin-top: 10px;
-            white-space: pre-wrap;
-            font-family: monospace;
-            font-size: 12px;
-            max-height: 300px;
-            overflow-y: auto;
-        }
-        .success {
-            border-color: #28a745;
-            background-color: #d4edda;
-        }
-        .error {
-            border-color: #dc3545;
-            background-color: #f8d7da;
-        }
-        .loading {
-            border-color: #ffc107;
-            background-color: #fff3cd;
-        }
-        .status-indicator {
-            display: inline-block;
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            margin-right: 8px;
-        }
-        .status-success { background-color: #28a745; }
-        .status-error { background-color: #dc3545; }
-        .status-loading { background-color: #ffc107; }
-        .status-pending { background-color: #6c757d; }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CureRise API Test</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: #f5f5f5;
+    }
+    .container {
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      margin-bottom: 20px;
+    }
+    .test-section { margin-bottom: 30px; }
+    .test-section h2 {
+      color: #333;
+      border-bottom: 2px solid #007bff;
+      padding-bottom: 10px;
+    }
+    .test-button {
+      background: #007bff;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 4px;
+      cursor: pointer;
+      margin: 5px;
+      font-size: 14px;
+    }
+    .test-button:hover { background: #0056b3; }
+    .test-button:disabled {
+      background: #ccc;
+      cursor: not-allowed;
+    }
+    .result {
+      background: #f8f9fa;
+      border: 1px solid #dee2e6;
+      border-radius: 4px;
+      padding: 15px;
+      margin-top: 10px;
+      white-space: pre-wrap;
+      font-family: monospace;
+      font-size: 12px;
+      max-height: 300px;
+      overflow-y: auto;
+      display: none;
+    }
+    .success { border-color: #28a745; background-color: #d4edda; }
+    .error { border-color: #dc3545; background-color: #f8d7da; }
+    .loading { border-color: #ffc107; background-color: #fff3cd; }
+    .status-indicator {
+      display: inline-block;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      margin-right: 8px;
+    }
+    .status-success { background-color: #28a745; }
+    .status-error { background-color: #dc3545; }
+    .status-loading { background-color: #ffc107; }
+    .status-pending { background-color: #6c757d; }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <h1>CureRise API Test Dashboard</h1>
-        <p>Test all the API endpoints to ensure the backend is working correctly.</p>
-        
-        <div class="test-section">
-            <h2>Basic Endpoints</h2>
-            <button class="test-button" onclick="testEndpoint('GET', '/api/health')">
-                <span class="status-indicator status-pending" id="health-status"></span>
-                Health Check
-            </button>
-            <button class="test-button" onclick="testEndpoint('GET', '/')">
-                <span class="status-indicator status-pending" id="home-status"></span>
-                Home
-            </button>
-            <div id="basic-results" class="result" style="display: none;"></div>
-        </div>
+  <div class="container">
+    <h1>CureRise API Test Dashboard</h1>
+    <p>Use this dashboard to test all backend endpoints quickly.</p>
 
-        <div class="test-section">
-            <h2>Patient Endpoints</h2>
-            <button class="test-button" onclick="testEndpoint('GET', '/api/patients')">
-                <span class="status-indicator status-pending" id="patients-status"></span>
-                Get Patients
-            </button>
-            <button class="test-button" onclick="testEndpoint('GET', '/api/patients?page=1&per_page=3')">
-                <span class="status-indicator status-pending" id="patients-paged-status"></span>
-                Get Patients (Paged)
-            </button>
-            <button class="test-button" onclick="testEndpoint('GET', '/api/patients?category=cardiac')">
-                <span class="status-indicator status-pending" id="patients-filtered-status"></span>
-                Get Patients (Filtered)
-            </button>
-            <div id="patients-results" class="result" style="display: none;"></div>
-        </div>
-
-        <div class="test-section">
-            <h2>Hospital & Education Endpoints</h2>
-            <button class="test-button" onclick="testEndpoint('GET', '/api/hospitals')">
-                <span class="status-indicator status-pending" id="hospitals-status"></span>
-                Get Hospitals
-            </button>
-            <button class="test-button" onclick="testEndpoint('GET', '/api/education')">
-                <span class="status-indicator status-pending" id="education-status"></span>
-                Get Education Content
-            </button>
-            <div id="hospital-education-results" class="result" style="display: none;"></div>
-        </div>
-
-        <div class="test-section">
-            <h2>Food Bank Endpoints</h2>
-            <button class="test-button" onclick="testEndpoint('GET', '/api/food-bank/stats')">
-                <span class="status-indicator status-pending" id="food-bank-stats-status"></span>
-                Food Bank Stats
-            </button>
-            <button class="test-button" onclick="testFoodBankDonation()">
-                <span class="status-indicator status-pending" id="food-bank-donation-status"></span>
-                Create Food Bank Donation
-            </button>
-            <div id="food-bank-results" class="result" style="display: none;"></div>
-        </div>
-
-        <div class="test-section">
-            <h2>Authentication Endpoints</h2>
-            <button class="test-button" onclick="testRegistration()">
-                <span class="status-indicator status-pending" id="register-status"></span>
-                Register User
-            </button>
-            <button class="test-button" onclick="testLogin()">
-                <span class="status-indicator status-pending" id="login-status"></span>
-                Login User
-            </button>
-            <button class="test-button" onclick="testProfile()" id="profile-btn" disabled>
-                <span class="status-indicator status-pending" id="profile-status"></span>
-                Get Profile (Requires Login)
-            </button>
-            <div id="auth-results" class="result" style="display: none;"></div>
-        </div>
-
-        <div class="test-section">
-            <h2>Donation Endpoints</h2>
-            <button class="test-button" onclick="testDonation()" id="donation-btn" disabled>
-                <span class="status-indicator status-pending" id="donation-status"></span>
-                Create Donation (Requires Login)
-            </button>
-            <div id="donation-results" class="result" style="display: none;"></div>
-        </div>
-
-        <div class="test-section">
-            <h2>Run All Tests</h2>
-            <button class="test-button" onclick="runAllTests()" style="background: #28a745;">
-                Run All Tests
-            </button>
-            <div id="all-results" class="result" style="display: none;"></div>
-        </div>
+    <!-- BASIC -->
+    <div class="test-section">
+      <h2>Basic Endpoints</h2>
+      <button class="test-button" onclick="testEndpoint('GET', '/api/health')">
+        <span class="status-indicator status-pending" id="health-status"></span>
+        Health Check
+      </button>
+      <button class="test-button" onclick="testEndpoint('GET', '/')">
+        <span class="status-indicator status-pending" id="home-status"></span>
+        Home
+      </button>
+      <div id="basic-results" class="result"></div>
     </div>
 
-    <script>
-        const BASE_URL = 'http://localhost:5000';
-        let authToken = null;
+    <!-- PATIENT -->
+    <div class="test-section">
+      <h2>Patient Endpoints</h2>
+      <button class="test-button" onclick="testEndpoint('GET', '/api/patients')">
+        <span class="status-indicator status-pending" id="patients-status"></span>
+        Get Patients
+      </button>
+      <button class="test-button" onclick="testEndpoint('GET', '/api/patients?page=1&per_page=3')">
+        <span class="status-indicator status-pending" id="patients-paged-status"></span>
+        Get Patients (Paged)
+      </button>
+      <button class="test-button" onclick="testEndpoint('GET', '/api/patients?category=cardiac')">
+        <span class="status-indicator status-pending" id="patients-filtered-status"></span>
+        Get Patients (Filtered)
+      </button>
+      <div id="patients-results" class="result"></div>
+    </div>
 
-        function updateStatus(elementId, status) {
-            const indicator = document.getElementById(elementId);
-            indicator.className = `status-indicator status-${status}`;
+    <!-- HOSPITAL & EDUCATION -->
+    <div class="test-section">
+      <h2>Hospital & Education Endpoints</h2>
+      <button class="test-button" onclick="testEndpoint('GET', '/api/hospitals')">
+        <span class="status-indicator status-pending" id="hospitals-status"></span>
+        Get Hospitals
+      </button>
+      <button class="test-button" onclick="testEndpoint('GET', '/api/education')">
+        <span class="status-indicator status-pending" id="education-status"></span>
+        Get Education Content
+      </button>
+      <div id="hospital-education-results" class="result"></div>
+    </div>
+
+    <!-- FOOD BANK -->
+    <div class="test-section">
+      <h2>Food Bank Endpoints</h2>
+      <button class="test-button" onclick="testEndpoint('GET', '/api/food-bank/stats')">
+        <span class="status-indicator status-pending" id="food-bank-stats-status"></span>
+        Food Bank Stats
+      </button>
+      <button class="test-button" onclick="testFoodBankDonation()">
+        <span class="status-indicator status-pending" id="food-bank-donation-status"></span>
+        Create Food Bank Donation
+      </button>
+      <div id="food-bank-results" class="result"></div>
+    </div>
+
+    <!-- AUTH -->
+    <div class="test-section">
+      <h2>Authentication Endpoints</h2>
+      <button class="test-button" onclick="testRegistration()">
+        <span class="status-indicator status-pending" id="register-status"></span>
+        Register User
+      </button>
+      <button class="test-button" onclick="testLogin()">
+        <span class="status-indicator status-pending" id="login-status"></span>
+        Login User
+      </button>
+      <button class="test-button" onclick="testProfile()" id="profile-btn" disabled>
+        <span class="status-indicator status-pending" id="profile-status"></span>
+        Get Profile (Requires Login)
+      </button>
+      <div id="auth-results" class="result"></div>
+    </div>
+
+    <!-- DONATION -->
+    <div class="test-section">
+      <h2>Donation Endpoints</h2>
+      <button class="test-button" onclick="testDonation()" id="donation-btn" disabled>
+        <span class="status-indicator status-pending" id="donation-status"></span>
+        Create Donation (Requires Login)
+      </button>
+      <div id="donation-results" class="result"></div>
+    </div>
+
+    <!-- RUN ALL -->
+    <div class="test-section">
+      <h2>Run All Tests</h2>
+      <button class="test-button" onclick="runAllTests()" style="background: #28a745;">
+        Run All Tests
+      </button>
+      <div id="all-results" class="result"></div>
+    </div>
+  </div>
+
+  <script>
+    const BASE_URL = 'http://localhost:5000';
+    let authToken = null;
+
+    function updateStatus(elementId, status) {
+      const indicator = document.getElementById(elementId);
+      if (indicator) indicator.className = `status-indicator status-${status}`;
+    }
+
+    function showResult(containerId, data, isError = false) {
+      const container = document.getElementById(containerId);
+      if (!container) return;
+      container.style.display = 'block';
+      container.className = `result ${isError ? 'error' : 'success'}`;
+      container.textContent = typeof data === 'string' ? data : JSON.stringify(data, null, 2);
+    }
+
+    async function testEndpoint(method, endpoint, data = null, headers = {}) {
+      const url = `${BASE_URL}${endpoint}`;
+      const statusId = endpoint.replace(/[^a-zA-Z0-9]/g, '-') + '-status';
+
+      updateStatus(statusId, 'loading');
+
+      try {
+        const options = { method, headers: { 'Content-Type': 'application/json', ...headers } };
+        if (data) options.body = JSON.stringify(data);
+
+        const response = await fetch(url, options);
+        const result = await response.json();
+
+        if (response.ok) {
+          updateStatus(statusId, 'success');
+          showResult(getResultContainerId(endpoint), result);
+        } else {
+          updateStatus(statusId, 'error');
+          showResult(getResultContainerId(endpoint), result, true);
         }
+      } catch (error) {
+        updateStatus(statusId, 'error');
+        showResult(getResultContainerId(endpoint), `Error: ${error.message}`, true);
+      }
+    }
 
-        function showResult(containerId, data, isError = false) {
-            const container = document.getElementById(containerId);
-            container.style.display = 'block';
-            container.className = `result ${isError ? 'error' : 'success'}`;
-            container.textContent = typeof data === 'string' ? data : JSON.stringify(data, null, 2);
-        }
+    function getResultContainerId(endpoint) {
+      if (endpoint.includes('/api/health') || endpoint === '/') return 'basic-results';
+      if (endpoint.includes('/api/patients')) return 'patients-results';
+      if (endpoint.includes('/api/hospitals') || endpoint.includes('/api/education')) return 'hospital-education-results';
+      if (endpoint.includes('/api/food-bank')) return 'food-bank-results';
+      if (endpoint.includes('/api/auth')) return 'auth-results';
+      if (endpoint.includes('/api/donations')) return 'donation-results';
+      return 'all-results';
+    }
 
-        async function testEndpoint(method, endpoint, data = null, headers = {}) {
-            const url = `${BASE_URL}${endpoint}`;
-            const statusId = endpoint.replace(/[^a-zA-Z0-9]/g, '-') + '-status';
-            
-            updateStatus(statusId, 'loading');
-            
-            try {
-                const options = {
-                    method: method,
-                    headers: {
-                        'Content-Type': 'application/json',
-                        ...headers
-                    }
-                };
-                
-                if (data) {
-                    options.body = JSON.stringify(data);
-                }
-                
-                const response = await fetch(url, options);
-                const result = await response.json();
-                
-                if (response.ok) {
-                    updateStatus(statusId, 'success');
-                    showResult(getResultContainerId(endpoint), result);
-                } else {
-                    updateStatus(statusId, 'error');
-                    showResult(getResultContainerId(endpoint), result, true);
-                }
-            } catch (error) {
-                updateStatus(statusId, 'error');
-                showResult(getResultContainerId(endpoint), `Error: ${error.message}`, true);
-            }
-        }
+    async function testRegistration() {
+      const testData = {
+        email: `test${Date.now()}@example.com`,
+        password: 'testpassword123',
+        name: 'Test User',
+        phone: '+91-9876543210'
+      };
+      await testEndpoint('POST', '/api/auth/register', testData);
+    }
 
-        function getResultContainerId(endpoint) {
-            if (endpoint.includes('/api/health') || endpoint === '/') return 'basic-results';
-            if (endpoint.includes('/api/patients')) return 'patients-results';
-            if (endpoint.includes('/api/hospitals') || endpoint.includes('/api/education')) return 'hospital-education-results';
-            if (endpoint.includes('/api/food-bank')) return 'food-bank-results';
-            if (endpoint.includes('/api/auth')) return 'auth-results';
-            if (endpoint.includes('/api/donations')) return 'donation-results';
-            return 'all-results';
-        }
-
-        async function testRegistration() {
-            const testData = {
-                email: `test${Date.now()}@example.com`,
-                password: 'testpassword123',
-                name: 'Test User',
-                phone: '+91-9876543210'
-            };
-            
-            await testEndpoint('POST', '/api/auth/register', testData);
-        }
-
-        async function testLogin() {
-            const testData = {
-                email: 'test@example.com',
-                password: 'testpassword123'
-            };
-            
-            try {
-                const response = await fetch(`${BASE_URL}/api/auth/login`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(testData)
-                });
-                
-                const result = await response.json();
-                
-                if (response.ok) {
-                    authToken = result.access_token;
-                    document.getElementById('profile-btn').disabled = false;
-                    document.getElementById('donation-btn').disabled = false;
-                    updateStatus('login-status', 'success');
-                    showResult('auth-results', result);
-                } else {
-                    updateStatus('login-status', 'error');
-                    showResult('auth-results', result, true);
-                }
-            } catch (error) {
-                updateStatus('login-status', 'error');
-                showResult('auth-results', `Error: ${error.message}`, true);
-            }
-        }
-
-        async function testProfile() {
-            if (!authToken) {
-                showResult('auth-results', 'No auth token available', true);
-                return;
-            }
-            
-            await testEndpoint('GET', '/api/auth/profile', null, {
-                'Authorization': `Bearer ${authToken}`
-            });
-        }
-
-        async function testDonation() {
-            if (!authToken) {
-                showResult('donation-results', 'No auth token available', true);
-                return;
-            }
-            
-            const testData = {
-                amount: 1000,
-                donation_type: 'patient',
-                patient_id: '1',
-                donor_name: 'Test Donor',
-                donor_email: 'donor@example.com',
-                donor_phone: '+91-9876543210',
-                payment_method: 'card'
-            };
-            
-            await testEndpoint('POST', '/api/donations', testData);
-        }
-
-        async function testFoodBankDonation() {
-            const testData = {
-                amount: 500,
-                donation_type: 'monthly',
-                donor_name: 'Test Donor',
-                donor_email: 'donor@example.com',
-                donor_phone: '+91-9876543210',
-                payment_method: 'upi'
-            };
-            
-            await testEndpoint('POST', '/api/food-bank/donations', testData);
-        }
-
-        async function runAllTests() {
-            const tests = [
-                () => testEndpoint('GET', '/api/health'),
-                () => testEndpoint('GET', '/'),
-                () => testEndpoint('GET', '/api/patients'),
-                () => testEndpoint('GET', '/api/hospitals'),
-                () => testEndpoint('GET', '/api/education'),
-                () => testEndpoint('GET', '/api/food-bank/stats'),
-                () => testRegistration(),
-                () => testLogin(),
-                () => testFoodBankDonation()
-            ];
-            
-            showResult('all-results', 'Running all tests...', false);
-            
-            for (const test of tests) {
-                try {
-                    await test();
-                    await new Promise(resolve => setTimeout(resolve, 500)); // Small delay between tests
-                } catch (error) {
-                    console.error('Test failed:', error);
-                }
-            }
-            
-            showResult('all-results', 'All tests completed! Check individual results above.', false);
-        }
-
-        // Auto-run basic tests on page load
-        window.addEventListener('load', () => {
-            setTimeout(() => {
-                testEndpoint('GET', '/api/health');
-                testEndpoint('GET', '/');
-            }, 1000);
+    async function testLogin() {
+      const testData = { email: 'test@example.com', password: 'testpassword123' };
+      try {
+        const response = await fetch(`${BASE_URL}/api/auth/login`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(testData)
         });
-    </script>
+        const result = await response.json();
+        if (response.ok) {
+          authToken = result.access_token;
+          document.getElementById('profile-btn').disabled = false;
+          document.getElementById('donation-btn').disabled = false;
+          updateStatus('login-status', 'success');
+          showResult('auth-results', result);
+        } else {
+          updateStatus('login-status', 'error');
+          showResult('auth-results', result, true);
+        }
+      } catch (error) {
+        updateStatus('login-status', 'error');
+        showResult('auth-results', `Error: ${error.message}`, true);
+      }
+    }
+
+    async function testProfile() {
+      if (!authToken) return showResult('auth-results', 'No auth token available', true);
+      await testEndpoint('GET', '/api/auth/profile', null, { 'Authorization': `Bearer ${authToken}` });
+    }
+
+    async function testDonation() {
+      if (!authToken) return showResult('donation-results', 'No auth token available', true);
+      const testData = {
+        amount: 1000, donation_type: 'patient', patient_id: '1',
+        donor_name: 'Test Donor', donor_email: 'donor@example.com',
+        donor_phone: '+91-9876543210', payment_method: 'card'
+      };
+      await testEndpoint('POST', '/api/donations', testData, { 'Authorization': `Bearer ${authToken}` });
+    }
+
+    async function testFoodBankDonation() {
+      const testData = {
+        amount: 500, donation_type: 'monthly',
+        donor_name: 'Test Donor', donor_email: 'donor@example.com',
+        donor_phone: '+91-9876543210', payment_method: 'upi'
+      };
+      await testEndpoint('POST', '/api/food-bank/donations', testData);
+    }
+
+    async function runAllTests() {
+      const tests = [
+        () => testEndpoint('GET', '/api/health'),
+        () => testEndpoint('GET', '/'),
+        () => testEndpoint('GET', '/api/patients'),
+        () => testEndpoint('GET', '/api/hospitals'),
+        () => testEndpoint('GET', '/api/education'),
+        () => testEndpoint('GET', '/api/food-bank/stats'),
+        () => testRegistration(),
+        () => testLogin(),
+        () => testFoodBankDonation()
+      ];
+
+      showResult('all-results', 'Running all tests...', false);
+
+      for (const test of tests) {
+        try {
+          await test();
+          await new Promise(r => setTimeout(r, 500));
+        } catch (error) {
+          console.error('Test failed:', error);
+        }
+      }
+
+      showResult('all-results', '✅ All tests completed! Check results above.', false);
+    }
+
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        testEndpoint('GET', '/api/health');
+        testEndpoint('GET', '/');
+      }, 1000);
+    });
+  </script>
 </body>
 </html>
+
